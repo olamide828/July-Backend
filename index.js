@@ -9,8 +9,14 @@ const paystackRoute = require("./routes/paystackRoute");
 require("dotenv").config();
 
 app.use(express.json());
-app.use(cors());
-
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://portfolioolamideadegboyega.vercel.app"
+    ],
+  })
+);
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("Database is Running"))
