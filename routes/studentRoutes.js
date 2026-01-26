@@ -163,8 +163,9 @@ router.post("/contact", async (req, res) => {
   const { email, message, firstName, lastName, phoneNumber } = req.body;
 
   try {
+    console.log("Incoming contact form data:", req.body);
     await transport.sendMail({
-      from: email,
+      from: process.env.GMAIL_USER,
       to: "adegboyegaolamide00@gmail.com",
       subject: "New Contact Message",
       text: `
