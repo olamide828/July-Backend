@@ -6,6 +6,8 @@ const fs = require("fs");
 const authenticate = require("../middleware/authMiddleware");
 const RoleAuthenticate = require("../middleware/roleMiddleware");
 const transport = require("../utils/mailer");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // fs.writeFile("text.html", "!","\n <h1>Olamide</h1>", (err) => {
 //   if (err) {
