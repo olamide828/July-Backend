@@ -162,26 +162,25 @@ router.delete("/student/delete/:id", async (req, res) => {
 router.post("/contact", async (req, res) => {
   const { email, message, firstName, lastName, phoneNumber } = req.body;
 
-  try {
-    console.log("Incoming contact form data:", req.body);
-//     await transport.sendMail({
-//       from: process.env.GMAIL_USER,
-//       to: "adegboyegaolamide00@gmail.com",
-//       subject: "New Contact Message",
-//       text: `
-// Name: ${firstName} ${lastName}
-// Phone: ${phoneNumber}
-// Email: ${email}
+try {
+  await transport.sendMail({
+    from: process.env.GMAIL_USER,
+    to: "adegboyegaolamide00@gmail.com",
+    subject: "New Contact Message",
+    text: `
+Name: ${firstName} ${lastName}
+Phone: ${phoneNumber}
+Email: ${email}
 
-// Message:
-// ${message}
-//   `,
-//     });
-    res.status(201).json({ message: "Email sent successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+Message:
+${message}
+  `,
+  });
+} catch (error) {
+  console.error("Nodemailer error:", error);
+  return res.status(500).json({ message: error.message });
+}
+})
 
 module.exports = router;
 
