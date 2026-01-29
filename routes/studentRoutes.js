@@ -182,6 +182,29 @@ ${message}
 }
 })
 
+router.post("/contactforportfolio", async (req, res) => {
+  const { firstName, lastName, email, phoneNumber, message } = req.body;
+  try {
+    await sgMail.send({
+      to: process.env.SENDGRID_TO_EMAIL,
+      from: process.env.SENDGRID_FROM_EMAIL,
+      subject: `New Contact Message from ${firstName} ${lastName}`,
+      text: `
+Name: ${firstName} ${lastName}
+Phone: ${phoneNumber}
+Email: ${email}
+
+Message:
+${message}
+      `,
+    });
+    res.status(201).json({ message: "Email sent successfully" });
+  } catch (error) {
+    console.error("SendGrid error:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
 
 // RESTful API
