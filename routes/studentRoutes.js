@@ -200,7 +200,7 @@ Message:
 ${message}
       `,
     });
-    res.status(201).json({ message: "Email sent successfully" });
+    res.status(201).json({ message: "Message sent successfully" });
   } catch (error) {
     console.error("SendGrid error:", error);
     res.status(500).json({ message: error.message });
