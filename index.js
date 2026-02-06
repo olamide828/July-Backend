@@ -9,7 +9,7 @@ const paystackRoute = require("./routes/paystackRoute");
 require("dotenv").config();
 
 app.use(express.json());
-app.options("*", cors());
+// app.options("/*", cors());
 const allowedOrigins = [
   "http://localhost:5173",
   "https://adegboyegaolamide.netlify.app"
