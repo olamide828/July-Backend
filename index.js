@@ -9,16 +9,23 @@ const paystackRoute = require("./routes/paystackRoute");
 require("dotenv").config();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://adegboyegaolamide.vercel.app"
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.options("*", cors());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://adegboyegaolamide.netlify.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("Database is Running"))
